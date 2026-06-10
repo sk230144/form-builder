@@ -374,12 +374,13 @@ class FormBuilder {
 
     /* ── Drag from palette onto canvas ── */
     _initPaletteDrag() {
-        document.querySelectorAll('[data-field-type]').forEach(tile => {
-            tile.addEventListener('dragstart', e => {
+        document.addEventListener('dragstart', e => {
+            const tile = e.target.closest('[data-field-type]');
+            if (tile) {
                 e.dataTransfer.setData('fieldType',  tile.dataset.fieldType);
                 e.dataTransfer.setData('fieldLabel', tile.dataset.fieldLabel);
                 e.dataTransfer.effectAllowed = 'copy';
-            });
+            }
         });
 
         this.canvas.addEventListener('dragover', e => {
