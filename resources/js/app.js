@@ -402,6 +402,24 @@ class FormBuilder {
             const label = e.dataTransfer.getData('fieldLabel');
             if (type) this.addField(type, label);
         });
+
+        // Also handle drop on child elements (emptyState, fieldsContainer)
+        this.container.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+        this.container.addEventListener('drop', e => {
+            e.preventDefault();
+            const type  = e.dataTransfer.getData('fieldType');
+            const label = e.dataTransfer.getData('fieldLabel');
+            if (type && !e.target.closest('.field-card')) this.addField(type, label);
+        });
+
+        const empty = document.getElementById('emptyState');
+        empty.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+        empty.addEventListener('drop', e => {
+            e.preventDefault();
+            const type  = e.dataTransfer.getData('fieldType');
+            const label = e.dataTransfer.getData('fieldLabel');
+            if (type) this.addField(type, label);
+        });
     }
 
     /* ── Main tabs (Editor / Settings) ── */
